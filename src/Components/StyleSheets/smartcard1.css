@@ -1,0 +1,113 @@
+.SmartCard {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--primary-background-color);
+
+    /* height: 100vh;
+    width: 100%; */
+    flex-direction: column;
+    padding: 2rem;
+    gap: 1rem;
+}
+.card {
+    text-align: center;
+    background-color: var(--primary-background-color);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    font-display: inherit;
+    gap: 1rem;
+    align-items: center;
+    border: 1px solid #a6a7a9;
+    padding: 0.5rem;
+}
+.SmartCard .card .left-card{
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   /* background-color: var(--primary-background-color); */
+   color: #a6a7a9 !important;
+   z-index: 1 !important;
+}
+.SmartCard .card .left-card .card-name {
+    font-size: 6rem;
+    font-weight: 700;
+    text-transform: capitalize;
+    /* color: #a6a7a9; */
+    /* margin: 2rem 0;
+    text-align: left;
+    padding-left: 3rem; */
+}
+.SmartCard .card .left-card .card-headline {
+    font-size: 4rem;
+    font-weight: 700;
+    text-transform: capitalize;
+    /* color: #a6a7a9; */
+    /* text-align: left;
+    padding-left: 3rem; */
+}
+.SmartCard .card .left-card .card-mobile-email {
+    font-size: 2rem;
+    font-weight: 400;
+    /* margin: 2rem 0;
+    text-align: left;
+    padding-left: 3rem; */
+}
+.SmartCard .card .left-card .card-mobile-email span {
+    padding: 0 0.5rem;
+    /* color: #a6a7a9; */
+}
+.SmartCard .card .left-card .card-mobile-email span i {
+    padding: 0 0.2rem;
+}
+.SmartCard .card .web-resume-qr-code {
+   
+    /* flex: 60%; */
+}
+.SmartCard .card .web-resume-qr-code svg{
+   
+}
+.SmartCard .card-download {
+    padding: 1rem;
+    border: none;
+    background: var(--primary-background-color);
+    color: var(--primary-color);
+    margin-top: 1rem;
+    border-radius: 5px;
+}
+
+.SmartCardHome {
+    /* height: 100vh; */
+    background: var(--primary-background-color);
+    color: var(--primary-color);
+    font-size: 1.6rem;
+}
+
+.SmartCardHome a {
+    cursor: pointer;
+    padding: 2rem;
+    display: block;
+}
+
+.SmartCardHome a:hover {
+    color: var(--secondary-color);
+}
+
+button{
+    border: none;
+    padding: 1rem 2rem;
+    cursor: pointer;
+    border-radius: 4px;
+}
+@media only screen and (max-width: 800px) {
+    .SmartCard .card {
+        flex-direction: column;
+        align-items: center;
+    }
+    }
+@media only screen and (max-width: 600px) {
+.SmartCard .card {
+    flex-direction: column;
+}
+}

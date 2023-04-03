@@ -1,0 +1,216 @@
+.Dashboard {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    background: var(--primary-background-color);
+    height: 100vh;
+}
+.Dashboard a{
+    font-size: 2.4rem;
+    color: var(--primary-color);
+}
+.Dashboard a:hover {
+    color: var(--secondary-color);
+}
+
+
+
+
+.Resume > *{
+    background: var(--primary-background-color) !important;
+    height: 100%;
+    width: 100%;
+    padding: 2rem 0 0 2rem;
+}
+
+.ResumeComponent {
+    padding: 5rem;
+    font-size: 130%;
+    display: flow-root;
+    max-width: 1200px;
+}
+.ResumeComponent .resume-header{
+    font-size: var(--resume-fontsize);
+    font-weight: bold;
+    color: #000;
+    text-align: center;
+    margin-top: 2rem;
+}
+.ResumeComponent .contact-details {
+    display: flex;
+    margin-bottom: 1.5rem;
+    justify-content: center;
+    gap: 2rem;
+}
+.ResumeComponent .contact-details li {
+    font-size: var(--resume-fontsize);
+}
+.resume-name {
+    text-align: center;
+    text-transform: uppercase;
+    color: #000;
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+}
+.resume-headline {
+    text-align: center;
+    font-size: var(--resume-fontsize);
+    color: #000;
+    font-weight: 300;
+}
+.ResumeComponent .resume-summary-content{
+    font-size: var(--resume-fontsize);
+}
+.resume-skills, .resume-tech-skills {
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 0;
+}
+.resume-skills div, .resume-tech-skills div {
+  flex: 0 0 33.333333%;
+  font-size: var(--resume-fontsize);
+}
+.resume-sub-details {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+.resume-sub-details ul{
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.resume-sub-details ul li{
+    font-size: var(--resume-fontsize);
+}
+
+.resume-sub-details .responsibilities{
+    justify-content: flex-start;
+    flex-direction: column;
+    row-gap: 2px;
+    margin-top: 1rem;
+}
+.resume-sub-details .responsibilities li{
+    margin-left: 2rem;
+    text-align: left;
+    list-style: disc;
+    font-weight: 100;
+}
+
+li:first-child {
+    list-style: none;
+}
+
+.download-pdf, .edit-pdf {
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--primary-background-color);
+    color: var(--primary-color);
+    padding: 1rem 2rem;
+    width: 10rem;
+    margin: 0 1rem 1rem;
+}
+
+.pdf-print {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.Files {
+    background: var(--primary-background-color);
+    height: 100%;
+    padding: 2rem;
+}
+
+.Files table {
+    width: 60%;
+    margin: 0rem auto;
+    font-size: 1.6rem;
+}
+
+.file-pdf {
+    display: none;
+  }
+
+  i{
+    cursor: pointer;
+  }
+
+  p{
+    color: #fff;
+    /* --resume-fontsize: 2rem; */
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+  .row1{
+    padding-bottom: 2rem;
+    padding-top: .5rem;
+  }
+  .section-heading{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 0.5rem;
+    align-items: center;
+    width: 50.8%;
+        border: 1px solid ;
+    border-radius: 4px;
+    align-items: center;
+    color: #9b9999;
+}
+  
+
+/* remove */
+
+.remove-heading{
+    display: flex;
+    align-items: center;
+    width: 50%;
+    color: #9b9999;
+}
+
+.remove-heading p{
+    color: #9b9999;
+}
+  .remove{
+    margin-left: 26%;
+    margin-top: 0;
+  }
+
+  .remove button{
+    margin-top: 0;
+    float: right;
+    /* right: 13rem; */
+    padding: 0.5rem;
+  }
+
+  .add{
+    width: 19rem;
+    text-align: center;
+    color: #9b9999;
+  }
+
+  .add:hover{
+    cursor: pointer;
+  }
+
+@media print {
+    .ResumeComponent { 
+        font-size: 10pt;
+    }
+    @page {
+      margin: 2rem;
+    }
+  }
+
+  @media only screen and (max-width: 600px) {
+    .section-heading{
+        width: 100%;
+    }
+    }
+

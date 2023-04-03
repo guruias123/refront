@@ -1,0 +1,10 @@
+.about-container{
+    text-align: center;
+    background-color: #000;
+    height: 100vh;
+    color: #fff;
+}
+
+.about-container p{
+    font-size: 2rem;
+}

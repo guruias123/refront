@@ -1,0 +1,30 @@
+@import "~@flaticon/flaticon-uicons/css/all/all";
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-size: 62.5%;
+  box-sizing: border-box;
+  font-family: 'Montserrat';
+  -webkit-print-color-adjust: exact;
+}
+
+#root {
+  width: 100%;
+  --primary-background-color: #000;
+  --secondary-background-color: grey;
+  --primary-color: #d1cbcb;
+  --secondary-color: #9b9999;
+  --resume-heading-fontsize: 1.4rem;
+  --resume-fontsize: 1.4rem;
+}
+::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+
+@media only screen and (max-width: 600px) {
+  html, body {
+    font-size: 65%;
+  }
+}
+
