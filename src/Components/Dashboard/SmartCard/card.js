@@ -1,6 +1,8 @@
 import axios from "axios";
-import { useEffect, useState, createRef } from "react";
+import { useEffect, useState, createRef, useRef } from "react";
 import { useScreenshot, createFileName } from "use-react-screenshot"
+import domToImage from 'dom-to-image';
+
 import cors from 'cors'
 // import QRCode from "react-qr-code";
 import QRCode from 'qrcode.react';
@@ -14,6 +16,7 @@ import * as htmlToImage from 'html-to-image';
 import { toPng, toJpeg, toBlob, toPixelData, toSvg } from 'html-to-image';
 
 import '../../StyleSheets/smartcard.css';
+import Navbar from "../Navbar/Navbar";
 
 const SmartCard = () => {
 
@@ -23,6 +26,8 @@ const SmartCard = () => {
     const smartCardId = id;
 
     const ref = createRef(null);
+    const captureRef = useRef(null);
+
     
     const [image, setImage] = useState()
     const [firstName, setFirstName] = useState("");
@@ -30,6 +35,8 @@ const SmartCard = () => {
     const [headline, setHeadline] = useState("");
     const [mobile, setMobile] = useState("");
     const [email, setEmail] = useState("");
+    const [emaillength, setEmaillength] = useState()
+    const [style, setStyle] = useState()
 
     // loading
     const [allData, setAllData] = useState(false)
@@ -38,6 +45,7 @@ const SmartCard = () => {
         if(!token) {
             naviagte('/signin')
         }
+        
         getsmartCard();
         setAllData(true)
     }, [])
@@ -62,6 +70,10 @@ const SmartCard = () => {
                setLastName(contact.lastName);
                setMobile(contact.phone);
                setEmail(contact.email);
+               setEmaillength (contact.email.length);
+               if(contact.email.length > 20){
+                setStyle('style')
+            }
            }
        } catch (error) {
            console.log(error)
@@ -105,30 +117,42 @@ const [imag, takeScreenShot] = useScreenshot({
     a.download = createFileName(extension, name);
     a.click();
   };
+  const handleCapture = () => {
+    domToImage.toPng(captureRef.current,{ width: 336, height: 186 }).then(dataUrl => {
+      // Use the dataURL for your needs (e.g. display as an image or download)
+      const link = document.createElement('a');
+      link.download = 'screenshot.png';
+      link.href = dataUrl;
+      link.click();
+    });
+  }
  
   const downloadScreenshot = () => takeScreenShot(ref.current).then(download);
     return ( 
         <>
+        {/* <Navbar /> */}
             {allData && allData === true ? 
-        <p>Loading ....</p>
+        <p style={{"paddingTop":"4rem"}}>Loading ....</p>
         :
         <div className="SmartCard">
-            <div ref={ref} id="node" className="card">
+            <div ref={captureRef} id="node" className="card">
                 <div className="left-card">
-                    {/* <div>  </div> */}
-                    <img className="card-image" style={{"display":"none"}}/>
+                    {/* <img className="card-image" /> */}
                     {/* <div style={{"display":"flex","flexDirection":"column"}}> */}
+                    <div>
                     <div className="card-name">{firstName}{" "} {lastName}</div>
                     <div className="card-headline">{headline}</div>
-                    <div className="card-mobile-email"><span><i class="fa fa-phone" aria-hidden="true"></i>{mobile}</span><span><i class="fa fa-envelope" aria-hidden="true"></i>{email}</span></div>
-                    {/* </div> */}
+                    {/* <div className="card-mobile-email"><span><i class="fa fa-phone" aria-hidden="true"></i>{mobile}</span><span><i class="fa fa-envelope" aria-hidden="true"></i>{email}</span></div> */}
+                    <div className="card-mobile-email"><span >{mobile}</span><span className={style}>{email}</span></div>
+
+                    </div>{/* </div> */}
                 </div>
                 <div>
-                    <QRCode value={`https://ganeshswami.netlify.app/dashboard/web-resume/${smartCardId}`} fgColor="#fff" bgColor="#000" size="200" />
+                    <QRCode value={`https://ganeshswami.netlify.app/dashboard/web-resume1/${smartCardId}`} fgColor="#fff" bgColor="#000"  />
                 </div>
             </div>
             {/* <button onClick={(e) => handleCaptureClick(e)}>Download</button> */}
-            <button onClick={handleCaptureClick}>Download</button>
+            <button onClick={handleCapture}>Download</button>
         </div>
 }
 </>

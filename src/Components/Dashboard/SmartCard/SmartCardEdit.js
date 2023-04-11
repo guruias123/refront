@@ -234,13 +234,14 @@ const SmartCardEdit = () => {
                 let certs = data.smartCard.certifications;
                 setCertifications(certs);
                 // License
-                let licen = data.smartCard.license;
+                let licen = data.smartCard.licenses;
                 console.log(licen);
-                setLicenseName(licen.name);
-                setLicenseNumber(licen.number);
-                setLicenseValidFrom(licen.validFrom);
-                setLicenseIssuer(licen.issuer);
-                setLicenseValidTo(licen.validTill);
+                // setLicenseName(licen.name);
+                // setLicenseNumber(licen.number);
+                // setLicenseValidFrom(licen.validFrom);
+                // setLicenseIssuer(licen.issuer);
+                // setLicenseValidTo(licen.validTill);
+                setLicenses(licen)
                 // Course
                 let cours = data.smartCard.courses;
                 setCourses(cours);
@@ -282,6 +283,7 @@ const SmartCardEdit = () => {
             setEndDate('');
         } else {
             console.log('please fill missing details')
+            alert('please fill missing details')
         }
     }
 
@@ -308,6 +310,7 @@ const SmartCardEdit = () => {
             setInternEndDate('');
         } else {
             console.log('please fill missing details')
+            alert('please fill missing details')
         }
     }
 
@@ -334,6 +337,7 @@ const SmartCardEdit = () => {
             setScore("");
         } else {
             console.log('please fill missing details')
+            alert('please fill missing details')
         }
     }
 
@@ -355,8 +359,10 @@ const SmartCardEdit = () => {
             setProjectStartDate('');
             setProjectEndDate('');
             setScore("")
+            setProjectDescription('')
         } else {
             console.log('please fill missing details')
+            alert('please fill missing details')
         }
     }
 
@@ -366,7 +372,7 @@ const SmartCardEdit = () => {
         const newItems = [...projects]; 
         newItems.splice(index, 1); 
         console.log(newItems);
-            setEducations(newItems);
+            setProjects(newItems);
     }
 
     const addVolunteers = (e) => {
@@ -381,6 +387,7 @@ const SmartCardEdit = () => {
             setVolunteerCompanyCountry("");
         } else {
             console.log('please fill missing details')
+            alert('please fill missing details')
         }
     }
 
@@ -406,6 +413,7 @@ const SmartCardEdit = () => {
             setTrainingScore('');
         } else {
             console.log('please fill missing details')
+            alert('please fill missing details')
         }
     }
 
@@ -432,6 +440,7 @@ const SmartCardEdit = () => {
             setCertificationScore('');
         } else {
             console.log('please fill missing details')
+            alert('please fill missing details')
         }
     }
 
@@ -448,7 +457,7 @@ const SmartCardEdit = () => {
     const addLicense = (e) =>{
         e.preventDefault();
         if(licenseName != '' && licenseNumber != '' && licenseIssuer != "" && licenseValidFrom != '' && licenseValidTo != '') {
-            setLicenses(prev => [...prev , {licenseName: licenseName, licenseNumber: licenseNumber, licenseIssuer: licenseIssuer, licenseValidFrom: licenseValidFrom, licenseValidTo: licenseValidTo}]);
+            setLicenses(prev => [...prev , {name: licenseName, number: licenseNumber, issuer: licenseIssuer, validFrom: licenseValidFrom, validTill: licenseValidTo}]);
             setLicenseName('');
             setLicenseNumber('');
             setLicenseIssuer('');
@@ -483,6 +492,7 @@ const SmartCardEdit = () => {
             setCourseScore('');
         } else {
             console.log('please fill missing details')
+            alert('please fill missing details')
         }
     }
 
@@ -504,6 +514,7 @@ const SmartCardEdit = () => {
             setPublictionDate("");
         } else {
             console.log('please fill missing details')
+            alert('please fill missing details')
         }
     }
 
@@ -529,6 +540,7 @@ const SmartCardEdit = () => {
             setWorkshopCompanyCountry("");
         } else {
             console.log('please fill missing details')
+            alert('please fill missing details')
         }
     }
 
@@ -552,6 +564,7 @@ const SmartCardEdit = () => {
             setReferenceCompany("");
         } else {
             console.log('please fill missing details')
+            alert('please fill missing details')
         }
     }
 
@@ -574,6 +587,7 @@ const SmartCardEdit = () => {
             setPatentStatus("");
         } else {
             console.log('please fill missing details')
+            alert('please fill missing details')
         }
     }
 
@@ -611,6 +625,9 @@ const SmartCardEdit = () => {
         if(certificationInstutionName != '' && certificationTitle != '' && certificationCity != "" && certificationCountry != '' && certificationStartDate != '' && certificationEndDate != '' && certificationScore != '') {
             certifications.push({institutionName: certificationInstutionName, title: certificationTitle, startedAt: certificationStartDate, endedAt: certificationEndDate, city: certificationCity, country: certificationCountry, score: certificationScore});
         }
+        if(licenseName != '' && licenseNumber != '' && licenseIssuer != '' && licenseValidFrom != '' && licenseValidTo != ''){
+            licenses.push({name: licenseName, number: licenseNumber, issuer: licenseIssuer, validFrom: licenseValidFrom, validTill: licenseValidTo})
+        }
         if(courseInstutionName != '' && courseTitle != '' && courseCity != "" && courseCountry != '' && courseStartDate != '' && courseEndDate != '' && courseScore != '') {
             courses.push({institutionName: courseInstutionName, title: courseTitle, startedAt: courseStartDate, endedAt: courseEndDate, city: courseCity, country: courseCountry, score: courseScore});
         }
@@ -639,6 +656,7 @@ const SmartCardEdit = () => {
         }
             const d = {
                 fileName:convertedImage,
+                // fileName1:'',
             contact: {
                 firstName,
                 lastName,
@@ -660,13 +678,14 @@ const SmartCardEdit = () => {
             honorsAndAwards,
             trainings,
             certifications,
-            license: {
-                name: licenseName,
-                number: licenseNumber,
-                validFrom: licenseValidFrom,
-                validTill: licenseValidTo,
-                issuer: licenseIssuer
-            },
+            // license: {
+            //     name: licenseName,
+            //     number: licenseNumber,
+            //     validFrom: licenseValidFrom,
+            //     validTill: licenseValidTo,
+            //     issuer: licenseIssuer
+            // },
+            licenses,
             courses,
             patents,
             publications,
@@ -688,7 +707,10 @@ const SmartCardEdit = () => {
             if (data.success) {
                 // /dashboard/smart-card-home/${data.smartCard._id}
                 // /dashboard/smart-card/${data.smartCard._id}
+                setIsSubmitting(true)
+            
                 navigate(`/dashboard/smart-card-home/${data.smartCard._id}`);
+                
             }
         } catch (error) {
             console.log(error)
@@ -800,9 +822,17 @@ const SmartCardEdit = () => {
         setReferences(data);   
     }
     const handleImage = (e) => {
+        if(e.target.files[0].name.includes('.png') || e.target.files[0].name.includes('.jpg') || e.target.files[0].name.includes('.jpeg')){
         setUpdateimage(e.target.files[0] )
+        console.log(e.target.files[0].name);
         const imageUrl = URL.createObjectURL(e.target.files[0]);
         setImgUrl(imageUrl)
+    }
+        else{
+            alert('select valid profile type')
+            e.target.value = null; // reset the file input field
+            setImgUrl(null); // clear the image URL state
+        }
     }
     const licenseHandleChange = (e, index) => {
         let data = [...licenses];
@@ -811,17 +841,20 @@ const SmartCardEdit = () => {
         setLicenses(data);   
     } 
 
-
+// loading
+const [isSubmitting, setIsSubmitting] = useState(false);
     return ( 
            
         <div className="Resume">
              {allData && allData === true ? 
-        <p>Loading ....</p>
+        <p >Loading ....</p>
         :
             <form onSubmit={(e) => handleSubmit(e)}>
+                            {isSubmitting && <img src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Youtube_loading_symbol_1_(wobbly).gif" alt="Loading..." />}
+
                 <h4>Profile</h4>
                 <img src={imgUrl ? imgUrl : image  } />
-                <input style={{"color":"#fff"}} type='file' onChange = {(e) => handleImage(e) } />
+                <input accept="image/*" style={{"color":"#fff"}} type='file' onChange = {(e) => handleImage(e) } />
                 <h4>Contact</h4>
                     <div className="row">
                         <div className="col-20">
@@ -852,17 +885,18 @@ const SmartCardEdit = () => {
                             <label for="phone">Phone</label>
                         </div>
                         <div className="col-75">
-                            <input autoComplete="off" type="text" id="phone" name="phone" placeholder="Your Phone.." value={phone} onChange={(e) => setPhone(e.target.value)}/>
+                            <input autoComplete="off" type="number" id="phone" name="phone" placeholder="Your Phone.." value={phone} onChange={(e) => setPhone(e.target.value)}/>
                         </div>
                     </div>
-                    <div className="row">
+                    {/* Address */}
+                    {/* <div className="row">
                         <div className="col-20">
                             <label for="address">Address</label>
                         </div>
                         <div className="col-75">
                             <input autoComplete="off" type="text" id="address" name="address" placeholder="Your Address.." value={address} onChange={(e) => setAddress(e.target.value)}/>
                         </div>
-                    </div>
+                    </div> */}
                     <div className="row">
                         <div className="col-20">
                             <label for="Linked Id">Linkedin Id</label>
@@ -917,7 +951,7 @@ const SmartCardEdit = () => {
                     {/* <SmartCardHeading heading='Experience' handleSubmit={addExperience} /> */}
                     {experiences.map((experience, index) => {
                         return (
-                            <span key={index}>
+                            <span className='sections' key={index}>
                              <RemoveButton heading={`Experience ${index+1}`}  index={index}  />
                                 <div className="row">
                                     <div className="col-20">
@@ -940,7 +974,7 @@ const SmartCardEdit = () => {
                                         <label for="startedAt">Start Date</label>
                                     </div>
                                     <div className="col-75">
-                                        <input autoComplete="off" type="date" id="startDate" name="startedAt" placeholder="Your start date" value={experience.startedAt} onChange={(e) => experienceHandleChange(e, index)}/>
+                                        <input autoComplete="off" type="date"  max={new Date().toISOString().split("T")[0]} id="startDate" name="startedAt" placeholder="Your start date" value={experience.startedAt} onChange={(e) => experienceHandleChange(e, index)}/>
                                     </div>
                                 </div>
                                 <div className="row">
@@ -948,7 +982,7 @@ const SmartCardEdit = () => {
                                         <label for="endDate">End Date</label>
                                     </div>
                                     <div className="col-75">
-                                        <input autoComplete="off" type="date" id="endedAt" name="endedAt" placeholder="Your end date" value={experience.endedAt} onChange={(e) => experienceHandleChange(e, index)}/>
+                                        <input autoComplete="off" type="date"  max="9999-12-31" id="endedAt" name="endedAt" placeholder="Your end date" value={experience.endedAt} onChange={(e) => experienceHandleChange(e, index)}/>
                                     </div>
                                 </div>
                                 <div className="row">
@@ -966,7 +1000,7 @@ const SmartCardEdit = () => {
                                     <div className="col-75">
                                         <input autoComplete="off" type="text" id="companyCountry" name="country" placeholder="Your Country" value={experience.country} onChange={(e) => experienceHandleChange(e, index)}/>
                                     </div>
-                                    <div className='col-75'>
+                                    <div className='col-75 remove_button'>
                                     <RemoveButton  content="Remove" index={index} handleSubmit={removeExperience} />
                                 </div>
                                 </div>
@@ -996,7 +1030,7 @@ const SmartCardEdit = () => {
                             <label for="startDate">Start Date</label>
                         </div>
                         <div className="col-75">
-                            <input autoComplete="off" type="date" id="startDate" name="startDate" placeholder="Your start date" value={startDate} onChange={(e) => setStartDate(e.target.value)}/>
+                            <input autoComplete="off" type="date"  max={new Date().toISOString().split("T")[0]} id="startDate" name="startDate" placeholder="Your start date" value={startDate} onChange={(e) => setStartDate(e.target.value)} />
                         </div>
                     </div>
                     <div className="row">
@@ -1004,7 +1038,7 @@ const SmartCardEdit = () => {
                             <label for="endDate">End Date</label>
                         </div>
                         <div className="col-75">
-                            <input autoComplete="off" type="date" id="endDate" name="endDate" placeholder="Your end date" value={endDate} onChange={(e) => setEndDate(e.target.value)}/>
+                            <input autoComplete="off" type="date"  max="9999-12-31" id="endDate" name="endDate" placeholder="Your end date" value={endDate} onChange={(e) => setEndDate(e.target.value)}/>
                         </div>
                     </div>
                     <div className="row">
@@ -1036,7 +1070,7 @@ const SmartCardEdit = () => {
                     {/* <SmartCardHeading heading='Internship' handleSubmit={addIntership} /> */}
                     {internships.map((internship, index) => {
                         return (
-                            <span key={index}>
+                            <span className='sections' key={index}>
                             <RemoveButton heading={`Internship ${index+1}`} index={index}  />
                                 <div className="row">
                                     <div className="col-20">
@@ -1059,7 +1093,7 @@ const SmartCardEdit = () => {
                                         <label for="startDate">Start Date</label>
                                     </div>
                                     <div className="col-75">
-                                        <input autoComplete="off" type="date" id="startDate" name="startedAt" placeholder="Your start date" value={internship.startedAt} onChange={(e) => internshipHandleChange(e, index)}/>
+                                        <input autoComplete="off" type="date"  max={new Date().toISOString().split("T")[0]} id="startDate" name="startedAt" placeholder="Your start date" value={internship.startedAt} onChange={(e) => internshipHandleChange(e, index)}/>
                                     </div>
                                 </div>
                                 <div className="row">
@@ -1067,7 +1101,7 @@ const SmartCardEdit = () => {
                                         <label for="endDate">End Date</label>
                                     </div>
                                     <div className="col-75">
-                                        <input autoComplete="off" type="date" id="endDate" name="endedAt" placeholder="Your end date" value={internship.endedAt} onChange={(e) => internshipHandleChange(e, index)}/>
+                                        <input autoComplete="off" type="date"  max="9999-12-31" id="endDate" name="endedAt" placeholder="Your end date" value={internship.endedAt} onChange={(e) => internshipHandleChange(e, index)}/>
                                     </div>
                                 </div>
                                 <div className="row">
@@ -1085,7 +1119,7 @@ const SmartCardEdit = () => {
                                     <div className="col-75">
                                         <input autoComplete="off" type="text" id="companyCountry" name="country" placeholder="Your Country" value={internship.country} onChange={(e) => internshipHandleChange(e, index)}/>
                                     </div>
-                                    <div className='col-75'>
+                                    <div className='col-75 remove_button'>
                             <RemoveButton content="Remove" index={index} handleSubmit={removeInternship} />                          
                                 </div>
                                 </div>
@@ -1114,7 +1148,7 @@ const SmartCardEdit = () => {
                             <label for="startDate">Start Date</label>
                         </div>
                         <div className="col-75">
-                            <input autoComplete="off" type="date" id="startDate" name="startDate" placeholder="Your start date" value={internStartDate} onChange={(e) => setInternStartDate(e.target.value)}/>
+                            <input autoComplete="off" type="date"  max={new Date().toISOString().split("T")[0]} id="startDate" name="startDate" placeholder="Your start date" value={internStartDate} onChange={(e) => setInternStartDate(e.target.value)}/>
                         </div>
                     </div>
                     <div className="row">
@@ -1122,7 +1156,7 @@ const SmartCardEdit = () => {
                             <label for="endDate">End Date</label>
                         </div>
                         <div className="col-75">
-                            <input autoComplete="off" type="date" id="endDate" name="endDate" placeholder="Your end date" value={internEndDate} onChange={(e) => setInternEndDate(e.target.value)}/>
+                            <input autoComplete="off" type="date"  max="9999-12-31" id="endDate" name="endDate" placeholder="Your end date" value={internEndDate} onChange={(e) => setInternEndDate(e.target.value)}/>
                         </div>
                     </div>
                     <div className="row">
@@ -1154,7 +1188,7 @@ const SmartCardEdit = () => {
                     {/* <SmartCardHeading heading='Education' handleSubmit={addEducation} /> */}
                     {educations.map((education, index) => {
                         return (
-                            <span key={index}>
+                            <span className='sections' key={index}>
                             <RemoveButton heading={`Education ${index+1}`} index={index} />
                                 <div className="row">
                                     <div className="col-20">
@@ -1177,7 +1211,7 @@ const SmartCardEdit = () => {
                                         <label for="startDate">Start Date</label>
                                     </div>
                                     <div className="col-75">
-                                        <input autoComplete="off" type="date" id="startDate" name="startedAt" placeholder="Your start date" value={education.startedAt} onChange={(e) => educationHandleChange(e, index)}/>
+                                        <input autoComplete="off" type="date"  max={new Date().toISOString().split("T")[0]} id="startDate" name="startedAt" placeholder="Your start date" value={education.startedAt} onChange={(e) => educationHandleChange(e, index)}/>
                                     </div>
                                 </div>
                                 <div className="row">
@@ -1185,7 +1219,7 @@ const SmartCardEdit = () => {
                                         <label for="endDate">End Date</label>
                                     </div>
                                     <div className="col-75">
-                                        <input autoComplete="off" type="date" id="endDate" name="endedAt" placeholder="Your end date" value={education.endedAt} onChange={(e) => educationHandleChange(e, index)}/>
+                                        <input autoComplete="off" type="date"  max="9999-12-31" id="endDate" name="endedAt" placeholder="Your end date" value={education.endedAt} onChange={(e) => educationHandleChange(e, index)}/>
                                     </div>
                                 </div>
                                 <div className="row">
@@ -1211,7 +1245,7 @@ const SmartCardEdit = () => {
                                     <div className="col-75">
                                         <input autoComplete="off" type="text" id="score" name="score" placeholder="Your Score" value={education.score} onChange={(e) => educationHandleChange(e, index)}/>
                                     </div>
-                                    <div className='col-75'>
+                                    <div className='col-75 remove_button'>
                             <RemoveButton content="Remove" index={index} handleSubmit={removeEducation} /> 
                                 </div>
                                 </div>
@@ -1232,7 +1266,7 @@ const SmartCardEdit = () => {
                             <label for="companyName">College/University Name</label>
                         </div>
                         <div className="col-75">
-                            <input autoComplete="off" type="text" id="companyName" name="companyName" placeholder="Your Company Name" value={collegeName} onChange={(e) => setCollegeName(e.target.value)}/>
+                            <input autoComplete="off" type="text" id="companyName" name="companyName" placeholder="Your College/University Name" value={collegeName} onChange={(e) => setCollegeName(e.target.value)}/>
                         </div>
                     </div>
                     <div className="row">
@@ -1240,7 +1274,7 @@ const SmartCardEdit = () => {
                             <label for="startDate">Start Date</label>
                         </div>
                         <div className="col-75">
-                            <input autoComplete="off" type="date" id="startDate" name="startedAt" placeholder="Your start date" value={collegeStartDate} onChange={(e) => setCollegeStartDate(e.target.value)}/>
+                            <input autoComplete="off" type="date"  max={new Date().toISOString().split("T")[0]} id="startDate" name="startedAt" placeholder="Your start date" value={collegeStartDate} onChange={(e) => setCollegeStartDate(e.target.value)}/>
                         </div>
                     </div>
                     <div className="row">
@@ -1248,7 +1282,7 @@ const SmartCardEdit = () => {
                             <label for="endDate">End Date</label>
                         </div>
                         <div className="col-75">
-                            <input autoComplete="off" type="date" id="endDate" name="endDatedAt" placeholder="Your end date" value={collegeEndDate} onChange={(e) => setCollegeEndDate(e.target.value)}/>
+                            <input autoComplete="off" type="date"  max="9999-12-31" id="endDate" name="endDatedAt" placeholder="Your end date" value={collegeEndDate} onChange={(e) => setCollegeEndDate(e.target.value)}/>
                         </div>
                     </div>
                     <div className="row">
@@ -1299,7 +1333,7 @@ const SmartCardEdit = () => {
                     {/* <SmartCardHeading heading='Project' handleSubmit={addProject} /> */}
                     {projects.map((project, index) => {
                         return (
-                            <span>
+                            <span className='sections'>
                             <RemoveButton heading={`Project ${index+1}`} index={index}  />
                                 <div className="row">
                                     <div className="col-20">
@@ -1322,7 +1356,7 @@ const SmartCardEdit = () => {
                                         <label for="startDate">Start Date</label>
                                     </div>
                                     <div className="col-75">
-                                        <input autoComplete="off" type="date" id="startDate" name="startedAt" placeholder="Your start date" value={project.startedAt} onChange={(e) => projectHandleChange(e, index)}/>
+                                        <input autoComplete="off" type="date"  max={new Date().toISOString().split("T")[0]} id="startDate" name="startedAt" placeholder="Your start date" value={project.startedAt} onChange={(e) => projectHandleChange(e, index)}/>
                                     </div>
                                 </div>
                                 <div className="row">
@@ -1330,7 +1364,7 @@ const SmartCardEdit = () => {
                                         <label for="endDate">End Date</label>
                                     </div>
                                     <div className="col-75">
-                                        <input autoComplete="off" type="date" id="endDate" name="endedAt" placeholder="Your end date" value={project.endedAt} onChange={(e) => projectHandleChange(e, index)}/>
+                                        <input autoComplete="off" type="date"  max="9999-12-31" id="endDate" name="endedAt" placeholder="Your end date" value={project.endedAt} onChange={(e) => projectHandleChange(e, index)}/>
                                     </div>
                                 </div>
                                 <div className="row">
@@ -1340,7 +1374,7 @@ const SmartCardEdit = () => {
                         <div className="col-75">
                             <textarea autoComplete="off" type="text" id="description" name="description" placeholder="Project Description" value={project.projectDescription} onChange={(e) => setProjectDescription(e.target.value)}/>
                         </div>
-                        <div className='col-75'>
+                        <div className='col-75 remove_button'>
                             <RemoveButton content="Remove" index={index} handleSubmit={removeProject} /> 
                                 </div>
                     </div>
@@ -1369,7 +1403,7 @@ const SmartCardEdit = () => {
                             <label for="startDate">Start Date</label>
                         </div>
                         <div className="col-75">
-                            <input autoComplete="off" type="date" id="startDate" name="startDate" placeholder="Your start date" value={projectStartDate} onChange={(e) => setProjectStartDate(e.target.value)}/>
+                            <input autoComplete="off" type="date"  max={new Date().toISOString().split("T")[0]} id="startDate" name="startDate" placeholder="Your start date" value={projectStartDate} onChange={(e) => setProjectStartDate(e.target.value)}/>
                         </div>
                     </div>
                     <div className="row">
@@ -1377,7 +1411,7 @@ const SmartCardEdit = () => {
                             <label for="endDate">End Date</label>
                         </div>
                         <div className="col-75">
-                            <input autoComplete="off" type="date" id="endDate" name="endDate" placeholder="Your end date" value={projectEndDate} onChange={(e) => setProjectEndDate(e.target.value)}/>
+                            <input autoComplete="off" type="date"  max="9999-12-31" id="endDate" name="endDate" placeholder="Your end date" value={projectEndDate} onChange={(e) => setProjectEndDate(e.target.value)}/>
                         </div>
                     </div>
                     <div className="row">
@@ -1397,7 +1431,7 @@ const SmartCardEdit = () => {
                     {/* <SmartCardHeading heading='Volunteer Experience' handleSubmit={addVolunteers} /> */}
                     {volunteerExperiences?.map((volunteer, index) => {
                         return (
-                            <span key={index}>
+                            <span className='sections' key={index}>
                             <RemoveButton heading={`Volunteer Experience ${index+1}`} index={index}  />
                                 <div className="row">
                                     <div className="col-20">
@@ -1420,7 +1454,7 @@ const SmartCardEdit = () => {
                                         <label for="startDate">Start Date</label>
                                     </div>
                                     <div className="col-75">
-                                        <input autoComplete="off" type="date" id="startDate" name="startedAt" placeholder="Your start date" value={volunteer.startedAt} onChange={(e) => volunteerHandleChange(e, index)}/>
+                                        <input autoComplete="off" type="date"  max={new Date().toISOString().split("T")[0]} id="startDate" name="startedAt" placeholder="Your start date" value={volunteer.startedAt} onChange={(e) => volunteerHandleChange(e, index)}/>
                                     </div>
                                 </div>
                                 <div className="row">
@@ -1428,7 +1462,7 @@ const SmartCardEdit = () => {
                                         <label for="endDate">End Date</label>
                                     </div>
                                     <div className="col-75">
-                                        <input autoComplete="off" type="date" id="endDate" name="endedAt" placeholder="Your end date" value={volunteer.endedAt} onChange={(e) => volunteerHandleChange(e, index)}/>
+                                        <input autoComplete="off" type="date"  max="9999-12-31" id="endDate" name="endedAt" placeholder="Your end date" value={volunteer.endedAt} onChange={(e) => volunteerHandleChange(e, index)}/>
                                     </div>
                                 </div>
                                 <div className="row">
@@ -1446,7 +1480,7 @@ const SmartCardEdit = () => {
                                     <div className="col-75">
                                         <input autoComplete="off" type="text" id="description" name="country" placeholder="Volunteer Country" value={volunteer.country} onChange={(e) => volunteerHandleChange(e, index)}/>
                                     </div>
-                                    <div className='col-75'>
+                                    <div className='col-75 remove_button'>
                             <RemoveButton content="Remove" index={index} handleSubmit={removeVolunteers} />
                                 </div>
                                 </div>
@@ -1475,7 +1509,7 @@ const SmartCardEdit = () => {
                             <label for="startDate">Start Date</label>
                         </div>
                         <div className="col-75">
-                            <input autoComplete="off" type="date" id="startDate" name="startDate" placeholder="Your start date" value={volunteerStartDate} onChange={(e) => setVolunteerStartDate(e.target.value)}/>
+                            <input autoComplete="off" type="date"  max={new Date().toISOString().split("T")[0]} id="startDate" name="startDate" placeholder="Your start date" value={volunteerStartDate} onChange={(e) => setVolunteerStartDate(e.target.value)}/>
                         </div>
                     </div>
                     <div className="row">
@@ -1483,7 +1517,7 @@ const SmartCardEdit = () => {
                             <label for="endDate">End Date</label>
                         </div>
                         <div className="col-75">
-                            <input autoComplete="off" type="date" id="endDate" name="endDate" placeholder="Your end date" value={volunteerEndDate} onChange={(e) => setVolunteerEndDate(e.target.value)}/>
+                            <input autoComplete="off" type="date"  max="9999-12-31" id="endDate" name="endDate" placeholder="Your end date" value={volunteerEndDate} onChange={(e) => setVolunteerEndDate(e.target.value)}/>
                         </div>
                     </div>
                     <div className="row">
@@ -1521,7 +1555,7 @@ const SmartCardEdit = () => {
                     {trainings?.map((training, index) => {
                         const {title, institutionName, city, country, startedAt, endedAt, score} = training;
                         return (
-                            <span key={index}>
+                            <span className='sections' key={index}>
                             <RemoveButton heading={`Training ${index+1}`} index={index} />
                                 <div className="row">
                                     <div className="col-20">
@@ -1560,7 +1594,7 @@ const SmartCardEdit = () => {
                                         <label for="startDate">Start Date</label>
                                     </div>
                                     <div className="col-75">
-                                        <input autoComplete="off" type="date" id="startDate" name="startedAt" placeholder="Your start date" value={startedAt} onChange={(e) => trainingChangeHandler(e, index)}/>
+                                        <input autoComplete="off" type="date"  max={new Date().toISOString().split("T")[0]} id="startDate" name="startedAt" placeholder="Your start date" value={startedAt} onChange={(e) => trainingChangeHandler(e, index)}/>
                                     </div>
                                 </div>
                                 <div className="row">
@@ -1568,7 +1602,7 @@ const SmartCardEdit = () => {
                                         <label for="endDate">End Date</label>
                                     </div>
                                     <div className="col-75">
-                                        <input autoComplete="off" type="date" id="endDate" name="endedAt" placeholder="Your end date" value={endedAt} onChange={(e) => trainingChangeHandler(e, index)}/>
+                                        <input autoComplete="off" type="date"  max="9999-12-31" id="endDate" name="endedAt" placeholder="Your end date" value={endedAt} onChange={(e) => trainingChangeHandler(e, index)}/>
                                     </div>
                                 </div>
                                 <div className="row">
@@ -1578,7 +1612,7 @@ const SmartCardEdit = () => {
                                     <div className="col-75">
                                         <input autoComplete="off" type="text" id="score" name="score" placeholder="Score" value={score} onChange={(e) => trainingChangeHandler(e, index)}/>
                                     </div>
-                                    <div className='col-75'>
+                                    <div className='col-75 remove_button'>
                             <RemoveButton content="Remove" index={index} handleSubmit={removeTraining} /> 
                                 </div>
                                 </div>
@@ -1623,7 +1657,7 @@ const SmartCardEdit = () => {
                             <label for="startDate">Start Date</label>
                         </div>
                         <div className="col-75">
-                            <input autoComplete="off" type="date" id="startDate" name="startDate" placeholder="Your start date" value={trainingStartDate} onChange={(e) => setTrainingStartDate(e.target.value)}/>
+                            <input autoComplete="off" type="date"  max={new Date().toISOString().split("T")[0]} id="startDate" name="startDate" placeholder="Your start date" value={trainingStartDate} onChange={(e) => setTrainingStartDate(e.target.value)}/>
                         </div>
                     </div>
                     <div className="row">
@@ -1631,7 +1665,7 @@ const SmartCardEdit = () => {
                             <label for="endDate">End Date</label>
                         </div>
                         <div className="col-75">
-                            <input autoComplete="off" type="date" id="endDate" name="endDate" placeholder="Your end date" value={trainingEndDate} onChange={(e) => setTrainingEndDate(e.target.value)}/>
+                            <input autoComplete="off" type="date"  max="9999-12-31" id="endDate" name="endDate" placeholder="Your end date" value={trainingEndDate} onChange={(e) => setTrainingEndDate(e.target.value)}/>
                         </div>
                     </div>
                     <div className="row">
@@ -1650,7 +1684,7 @@ const SmartCardEdit = () => {
                     {certifications?.map((certification, index )=> {
                         const {title, institutionName, city, country, startedAt, endedAt, score} = certification;
                         return (
-                            <span key={index}>
+                            <span className='sections' key={index}>
                             <RemoveButton heading={`Certification ${index+1}`} index={index} />
                                 <div className="row">
                                     <div className="col-20">
@@ -1689,7 +1723,7 @@ const SmartCardEdit = () => {
                                         <label for="startDate">Start Date</label>
                                     </div>
                                     <div className="col-75">
-                                        <input autoComplete="off" type="date" id="startDate" name="startedAt" placeholder="Your start date" value={startedAt} onChange={(e) => certificationChangeHandler(e, index)}/>
+                                        <input autoComplete="off" type="date"  max={new Date().toISOString().split("T")[0]} id="startDate" name="startedAt" placeholder="Your start date" value={startedAt} onChange={(e) => certificationChangeHandler(e, index)}/>
                                     </div>
                                 </div>
                                 <div className="row">
@@ -1697,7 +1731,7 @@ const SmartCardEdit = () => {
                                         <label for="endDate">End Date</label>
                                     </div>
                                     <div className="col-75">
-                                        <input autoComplete="off" type="date" id="endDate" name="endedAt" placeholder="Your end date" value={endedAt} onChange={(e) => certificationChangeHandler(e, index)}/>
+                                        <input autoComplete="off" type="date"  max="9999-12-31" id="endDate" name="endedAt" placeholder="Your end date" value={endedAt} onChange={(e) => certificationChangeHandler(e, index)}/>
                                     </div>
                                 </div>
                                 <div className="row">
@@ -1707,7 +1741,7 @@ const SmartCardEdit = () => {
                                     <div className="col-75">
                                         <input autoComplete="off" type="text" id="score" name="score" placeholder="Score" value={score} onChange={(e) => certificationChangeHandler(e, index)}/>
                                     </div>
-                                    <div className='col-75'>
+                                    <div className='col-75 remove_button'>
                             <RemoveButton content="Remove" index={index} handleSubmit={removeCertification} /> 
                                 </div>
                                 </div>
@@ -1752,7 +1786,7 @@ const SmartCardEdit = () => {
                             <label for="startDate">Start Date</label>
                         </div>
                         <div className="col-75">
-                            <input autoComplete="off" type="date" id="startDate" name="startDate" placeholder="Your start date" value={certificationStartDate} onChange={(e) => setCertificationStartDate(e.target.value)}/>
+                            <input autoComplete="off" type="date"  max={new Date().toISOString().split("T")[0]} id="startDate" name="startDate" placeholder="Your start date" value={certificationStartDate} onChange={(e) => setCertificationStartDate(e.target.value)}/>
                         </div>
                     </div>
                     <div className="row">
@@ -1760,7 +1794,7 @@ const SmartCardEdit = () => {
                             <label for="endDate">End Date</label>
                         </div>
                         <div className="col-75">
-                            <input autoComplete="off" type="date" id="endDate" name="endDate" placeholder="Your end date" value={certificationEndDate} onChange={(e) => setCertificationEndDate(e.target.value)}/>
+                            <input autoComplete="off" type="date"  max="9999-12-31" id="endDate" name="endDate" placeholder="Your end date" value={certificationEndDate} onChange={(e) => setCertificationEndDate(e.target.value)}/>
                         </div>
                     </div>
                     <div className="row">
@@ -1776,17 +1810,17 @@ const SmartCardEdit = () => {
                     
                      {/* License */}
                      <h4>License</h4>
-                    {licenses?.map((license, index )=> {
-                        const {licenseName, licenseNumber, licenseIssuer, licenseValidFrom, licenseValidTo} = license;
+                    {licenses && licenses.map((license, index )=> {
+                        const {name, number, issuer, validFrom, validTill} = license;
                         return (
-                            <span key={index}>
+                            <span className='sections' key={index}>
                             <RemoveButton heading={`License ${index+1}`} index={index} />
                                 <div className="row">
                                     <div className="col-20">
                                         <span for="certificationTitle">License Name</span>
                                     </div>
                                     <div className="col-75">
-                                        <input autoComplete="off" type="text" id="certificationTitle" name="title" placeholder="Your Title" value={licenseName} onChange={(e) => licenseHandleChange(e, index)}/>
+                                        <input autoComplete="off" type="text" id="certificationTitle" name="title" placeholder="Your Title" value={name} onChange={(e) => licenseHandleChange(e, index)}/>
                                     </div>
                                 </div>
                                 <div className="row">
@@ -1794,7 +1828,7 @@ const SmartCardEdit = () => {
                                         <span for="certificationName">License Number</span>
                                     </div>
                                     <div className="col-75">
-                                        <input autoComplete="off" type="text" id="certificationName" name="institutionName" placeholder="Institution Name" value={licenseNumber} onChange={(e) => licenseHandleChange(e, index)}/>
+                                        <input autoComplete="off" type="text" id="certificationName" name="institutionName" placeholder="Institution Name" value={number} onChange={(e) => licenseHandleChange(e, index)}/>
                                     </div>
                                 </div>
                                 <div className="row">
@@ -1802,7 +1836,7 @@ const SmartCardEdit = () => {
                                         <span for="city">License Issuer</span>
                                     </div>
                                     <div className="col-75">
-                                        <input autoComplete="off" type="text" id="city" name="city" placeholder="Institution city" value={licenseIssuer} onChange={(e) => licenseHandleChange(e, index)}/>
+                                        <input autoComplete="off" type="text" id="city" name="city" placeholder="Institution city" value={issuer} onChange={(e) => licenseHandleChange(e, index)}/>
                                     </div>
                                 </div>
                                 <div className="row">
@@ -1810,7 +1844,7 @@ const SmartCardEdit = () => {
                                         <span for="country">Valid From</span>
                                     </div>
                                     <div className="col-75">
-                                        <input autoComplete="off" type="text" id="country" name="country" placeholder="Institution country" value={licenseValidFrom} onChange={(e) => licenseHandleChange(e, index)}/>
+                                        <input autoComplete="off" type="text" id="country" name="country" placeholder="Institution country" value={validFrom} onChange={(e) => licenseHandleChange(e, index)}/>
                                     </div>
                                 </div>
                                 <div className="row">
@@ -1818,9 +1852,9 @@ const SmartCardEdit = () => {
                                         <span for="startDate">Valid To</span>
                                     </div>
                                     <div className="col-75">
-                                        <input autoComplete="off" type="date" id="startDate" name="startedAt" placeholder="Your start date" value={licenseValidTo} onChange={(e) => licenseHandleChange(e, index)}/>
+                                        <input autoComplete="off" type="date"  max="9999-12-31" id="startDate" name="startedAt" placeholder="Your start date" value={validTill} onChange={(e) => licenseHandleChange(e, index)}/>
                                     </div>
-                                    <div className='col-75'>
+                                    <div className='col-75 remove_button'>
                             <RemoveButton content="Remove" index={index} handleSubmit={removeLicense} /> 
                                 </div>
                                 </div>
@@ -1859,7 +1893,7 @@ const SmartCardEdit = () => {
                             <label for="licenseValidity">Valid From</label>
                         </div>
                         <div className="col-75">
-                            <input autoComplete="off" type="date" id="startDate" name="startDate" placeholder="Your start date" value={licenseValidFrom} onChange={(e) => setLicenseValidFrom(e.target.value)}/>
+                            <input autoComplete="off" type="date"  max={new Date().toISOString().split("T")[0]} id="startDate" name="startDate" placeholder="Your start date" value={licenseValidFrom} onChange={(e) => setLicenseValidFrom(e.target.value)}/>
                         </div>
                     </div>
                     <div className="row">
@@ -1867,7 +1901,7 @@ const SmartCardEdit = () => {
                             <label for="licenseValidity">Valid To</label>
                         </div>
                         <div className="col-75">
-                        <input autoComplete="off" type="date" id="startDate" name="startDate" placeholder="Your start date" value={licenseValidTo} onChange={(e) => setLicenseValidTo(e.target.value)}/>
+                        <input autoComplete="off" type="date"  max="9999-12-31" id="startDate" name="startDate" placeholder="Your start date" value={licenseValidTo} onChange={(e) => setLicenseValidTo(e.target.value)}/>
                         </div>
                     </div>
                     <SmartCardHeading handleSubmit={addLicense} />
@@ -1880,7 +1914,7 @@ const SmartCardEdit = () => {
                     {courses?.map((course, index) => {
                         const {title, institutionName, city, country, startedAt, endedAt, score} = course;
                         return (
-                            <span key={index}>
+                            <span className='sections' key={index}>
                             <RemoveButton heading={`Course ${index+1}`} index={index}  />
                                 <div className="row">
                                     <div className="col-20">
@@ -1919,7 +1953,7 @@ const SmartCardEdit = () => {
                                         <label for="startDate">Start Date</label>
                                     </div>
                                     <div className="col-75">
-                                        <input autoComplete="off" type="date" id="startDate" name="startedAt" placeholder="Your start date" value={startedAt} onChange={(e) => courseChangeHandler(e, index)}/>
+                                        <input autoComplete="off" type="date"  max={new Date().toISOString().split("T")[0]} id="startDate" name="startedAt" placeholder="Your start date" value={startedAt} onChange={(e) => courseChangeHandler(e, index)}/>
                                     </div>
                                 </div>
                                 <div className="row">
@@ -1927,7 +1961,7 @@ const SmartCardEdit = () => {
                                         <label for="endDate">End Date</label>
                                     </div>
                                     <div className="col-75">
-                                        <input autoComplete="off" type="date" id="endDate" name="endedAt" placeholder="Your end date" value={endedAt} onChange={(e) => courseChangeHandler(e, index)}/>
+                                        <input autoComplete="off" type="date"  max="9999-12-31" id="endDate" name="endedAt" placeholder="Your end date" value={endedAt} onChange={(e) => courseChangeHandler(e, index)}/>
                                     </div>
                                 </div>
                                 <div className="row">
@@ -1937,7 +1971,7 @@ const SmartCardEdit = () => {
                                     <div className="col-75">
                                         <input autoComplete="off" type="text" id="score" name="score" placeholder="Score" value={score} onChange={(e) => courseChangeHandler(e, index)}/>
                                     </div>
-                                    <div className='col-75'>
+                                    <div className='col-75 remove_button'>
                             <RemoveButton content="Remove" index={index} handleSubmit={removeCourse} /> 
                                 </div>
                                 </div>
@@ -1982,7 +2016,7 @@ const SmartCardEdit = () => {
                             <label for="startDate">Start Date</label>
                         </div>
                         <div className="col-75">
-                            <input autoComplete="off" type="date" id="startDate" name="startDate" placeholder="Your start date" value={courseStartDate} onChange={(e) => setCourseStartDate(e.target.value)}/>
+                            <input autoComplete="off" type="date"  max={new Date().toISOString().split("T")[0]} id="startDate" name="startDate" placeholder="Your start date" value={courseStartDate} onChange={(e) => setCourseStartDate(e.target.value)}/>
                         </div>
                     </div>
                     <div className="row">
@@ -1990,7 +2024,7 @@ const SmartCardEdit = () => {
                             <label for="endDate">End Date</label>
                         </div>
                         <div className="col-75">
-                            <input autoComplete="off" type="date" id="endDate" name="endDate" placeholder="Your end date" value={courseEndDate} onChange={(e) => setCourseEndDate(e.target.value)}/>
+                            <input autoComplete="off" type="date"  max="9999-12-31" id="endDate" name="endDate" placeholder="Your end date" value={courseEndDate} onChange={(e) => setCourseEndDate(e.target.value)}/>
                         </div>
                     </div>
                     <div className="row">
@@ -2009,7 +2043,7 @@ const SmartCardEdit = () => {
                     {patents?.map((patent, index) => {
                         const {title, number, status, descriptions} = patent;
                         return (
-                            <span key={index}>
+                            <span className='sections' key={index}>
                             <RemoveButton heading={`Patent ${index+1}`} index={index} />
                                 <div className="row">
                                     <div className="col-20">
@@ -2038,7 +2072,7 @@ const SmartCardEdit = () => {
                                             {status != "Approved" && <option value="Approved">Approved</option>}
                                         </select>
                                     </div>
-                                    <div className='col-75'>
+                                    <div className='col-75 remove_button'>
                             <RemoveButton content="Remove" index={index} handleSubmit={removePatent} /> 
                                 </div>
                                     </div>
@@ -2082,7 +2116,7 @@ const SmartCardEdit = () => {
                     {publications?.map((publication, index) => {
                         const {title, date, descriptions} = publication;
                         return (
-                            <span key={index}>
+                            <span className='sections' key={index}>
                             <RemoveButton heading={`Publication ${index+1}`} index={index} />
                                 <div className="row">
                                     <div className="col-20">
@@ -2097,9 +2131,9 @@ const SmartCardEdit = () => {
                                         <label for="number">Institution Name</label>
                                     </div>
                                     <div className="col-75">
-                                        <input autoComplete="off" type="date" id="certificationName" name="date" placeholder="publication Date" value={date} onChange={(e) => publicationHandleChange(e, index)}/>
+                                        <input autoComplete="off" type="date"  max={new Date().toISOString().split("T")[0]} id="certificationName" name="date" placeholder="publication Date" value={date} onChange={(e) => publicationHandleChange(e, index)}/>
                                     </div>
-                                    <div className='col-75'>
+                                    <div className='col-75 remove_button'>
                             <RemoveButton content="Remove" index={index} handleSubmit={removePublication} /> 
                                 </div>
                                 </div>
@@ -2120,7 +2154,7 @@ const SmartCardEdit = () => {
                             <label for="publicationDate">Date</label>
                         </div>
                         <div className="col-75">
-                            <input autoComplete="off" type="date" id="publicationDate" name="publicationDate" placeholder="Publication Date" value={publicationDate} onChange={(e) =>setPublictionDate(e.target.value)}/>
+                            <input autoComplete="off" type="date"  max={new Date().toISOString().split("T")[0]} id="publicationDate" name="publicationDate" placeholder="Publication Date" value={publicationDate} onChange={(e) =>setPublictionDate(e.target.value)}/>
                         </div>
                     </div>
                     <SmartCardHeading handleSubmit={addPublication} />
@@ -2136,7 +2170,7 @@ const SmartCardEdit = () => {
                     {/* <SmartCardHeading heading='Workshop' handleSubmit={addWorkshops} /> */}
                     {workshops?.map((workshop, index) => {
                         return (
-                            <span key={index}>
+                            <span className='sections' key={index}>
                             <RemoveButton heading={`Workshop ${index+1}`} index={index}/>
                                 <div className="row">
                                     <div className="col-20">
@@ -2159,7 +2193,7 @@ const SmartCardEdit = () => {
                                         <label for="startDate">Start Date</label>
                                     </div>
                                     <div className="col-75">
-                                        <input autoComplete="off" type="date" id="startDate" name="startedAt" placeholder="Your start date" value={workshop.startedAt} onChange={(e) => workshopHandleChange(e, index)}/>
+                                        <input autoComplete="off" type="date"  max={new Date().toISOString().split("T")[0]} id="startDate" name="startedAt" placeholder="Your start date" value={workshop.startedAt} onChange={(e) => workshopHandleChange(e, index)}/>
                                     </div>
                                 </div>
                                 <div className="row">
@@ -2167,7 +2201,7 @@ const SmartCardEdit = () => {
                                         <label for="endDate">End Date</label>
                                     </div>
                                     <div className="col-75">
-                                        <input autoComplete="off" type="date" id="endDate" name="endedAt" placeholder="Your end date" value={workshop.endedAt} onChange={(e) => workshopHandleChange(e, index)}/>
+                                        <input autoComplete="off" type="date"  max="9999-12-31" id="endDate" name="endedAt" placeholder="Your end date" value={workshop.endedAt} onChange={(e) => workshopHandleChange(e, index)}/>
                                     </div>
                                 </div>
                                 <div className="row">
@@ -2185,7 +2219,7 @@ const SmartCardEdit = () => {
                                     <div className="col-75">
                                         <input autoComplete="off" type="text" id="description" name="country" placeholder="Workshop Country" value={workshop.country} onChange={(e) => workshopHandleChange(e, index)}/>
                                     </div>
-                                    <div className='col-75'>
+                                    <div className='col-75 remove_button'>
                             <RemoveButton content="Remove" index={index} handleSubmit={removeWorkshops} />
                                 </div>
                                 </div>
@@ -2214,7 +2248,7 @@ const SmartCardEdit = () => {
                             <label for="startDate">Start Date</label>
                         </div>
                         <div className="col-75">
-                            <input autoComplete="off" type="date" id="startDate" name="startDate" placeholder="Your start date" value={workshopStartDate} onChange={(e) => setWorkshopStartDate(e.target.value)}/>
+                            <input autoComplete="off" type="date"  max={new Date().toISOString().split("T")[0]} id="startDate" name="startDate" placeholder="Your start date" value={workshopStartDate} onChange={(e) => setWorkshopStartDate(e.target.value)}/>
                         </div>
                     </div>
                     <div className="row">
@@ -2222,7 +2256,7 @@ const SmartCardEdit = () => {
                             <label for="endDate">End Date</label>
                         </div>
                         <div className="col-75">
-                            <input autoComplete="off" type="date" id="endDate" name="endDate" placeholder="Your end date" value={workshopEndDate} onChange={(e) => setWorkshopEndDate(e.target.value)}/>
+                            <input autoComplete="off" type="date"  max="9999-12-31" id="endDate" name="endDate" placeholder="Your end date" value={workshopEndDate} onChange={(e) => setWorkshopEndDate(e.target.value)}/>
                         </div>
                     </div>
                     <div className="row">
@@ -2251,7 +2285,7 @@ const SmartCardEdit = () => {
                     {references?.map((reference, index) => {
                         const {name, designation, company, email} = reference;
                         return (
-                            <span key={index}>
+                            <span className='sections' key={index}>
                             <RemoveButton heading={`Reference ${index+1}`} index={index} />
                                 <div className="row">
                                     <div className="col-20">
@@ -2284,7 +2318,7 @@ const SmartCardEdit = () => {
                                     <div className="col-75">
                                         <input autoComplete="off" type="text" id="country" name="email" placeholder="Email" value={email} onChange={(e) => referenceHandleChange(e, index)}/>
                                     </div>
-                                    <div className='col-75'>
+                                    <div className='col-75 remove_button'>
                             <RemoveButton content="Remove" index={index} handleSubmit={removeReference} /> 
                                 </div>
                                 </div>
@@ -2347,7 +2381,7 @@ const SmartCardEdit = () => {
                             <label for="dateOfBirth">Date Of Birth</label>
                         </div>
                         <div className="col-75">
-                            <input autoComplete="off" type="date" id="dateOfBirth" name="dateOfBirth" placeholder="Date Of Birth" value={dateOfBirth} onChange={e => setDateOfBirth(e.target.value)}/>
+                            <input autoComplete="off" type="date"  max={new Date().toISOString().split("T")[0]} id="dateOfBirth" name="dateOfBirth" placeholder="Date Of Birth" value={dateOfBirth} onChange={e => setDateOfBirth(e.target.value)}/>
                         </div>
                     </div>
                     <div className="row">

@@ -1,4 +1,4 @@
-  input[type=text], select, textarea,input[type=tel], input[type=email],input[type=search], input[type=password], input[type=date] {
+  input[type=text], select, textarea,input[type=tel], input[type=email],input[type=search], input[type=password], input[type=date], input[type=number] {
     width: 100%;
     padding: 12px;
     /* border: 1px solid #ccc; */
@@ -8,8 +8,9 @@
     border: none;
     color: var(--primary-color);
   }
-
-
+  input[type=date]{
+  max:"9999-12-31"
+  }
 
 
   input[type="text"].selected {
@@ -17,9 +18,15 @@
   }
 
 
-  input[type=text]:focus-visible,input[type=tel]:focus-visible, input[type=email]:focus-visible,input[type=search]:focus-visible, input[type=password]:focus-visible, input[type=date]:focus-visible {
+  input[type=text]:focus-visible, input[type=number]:focus-visible, input[type=tel]:focus-visible, input[type=email]:focus-visible,input[type=search]:focus-visible, input[type=password]:focus-visible, input[type=date]:focus-visible {
     border: none;
     outline: none;
+  }
+
+  input[type=number]::-webkit-inner-spin-button, 
+  input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none; 
+    margin: 0; 
   }
   
   label {

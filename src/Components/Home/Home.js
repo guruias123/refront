@@ -1,7 +1,10 @@
 import axios from "axios";
+import moment from 'moment';
+import { parse, format } from 'date-fns';
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
+import validator from 'email-validator';
 import 'react-toastify/dist/ReactToastify.css';
 
 import Logo from '../Assets/logo white.png'
@@ -16,6 +19,9 @@ const NewHome = () => {
     const [dob, setDOB] = useState("");
     const [mailSent, setMailSent] = useState(false);
     const [videoPopup, setVideoPopup] = useState(false);
+
+    // don't change after sending otp to mail
+    const [read, setRead] = useState(false)
 
     const [otp, setOTP] = useState("")
     const [verified, setVerified] = useState(false)
@@ -39,18 +45,39 @@ const NewHome = () => {
         setVideoPopup(val)
     }
 
-    const sendOTP = async(e) => {
+    const sendOTP = async(e,type) => {
         e.preventDefault();
         console.log(e)
         const d = {
             email,
+            type
         }
         if(email == "") {
-            return;
+            return  toast.error("email field can't empty", {
+                position: 'top-right',
+                autoClose: 15000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: 0,
+                progressStyle: { background: '#E8DFD0' },
+                theme: 'colored',
+                style: { background: 'grey', fontSize: "1.6rem" },
+              });
         }
+        const isEmailValid = validator.validate(email);
+        if (isEmailValid) {
+        console.log('Email is valid');
+        } else {
+        console.log('Email is not valid');
+        alert('not valid')
+        }
+
         try {
             const {data} = await axios.post(`${process.env.REACT_APP_API}/send-verification-mail`, d)
             if(data.success) {
+                setRead(true)
               console.log("Mail Sent SuccessFully");
               setMailSent(true);
               toast.success(data.msg, {
@@ -157,14 +184,37 @@ const NewHome = () => {
             mobile,
             dob,
         }
-        try {
-            const {data} = await axios.post(`${process.env.REACT_APP_API}/signup`, d);
-           
-            console.log(data);
-            if(data.success) {
-                localStorage.setItem("token", data.token);
-                navigate('/dashboard');
-                toast.success(data.msg, {
+
+            // Validate date of birth
+    const validDate = moment(dob, 'DD-MM-YYYY', true).isValid();
+    const validAge = moment().diff(dob, 'years') >= 18;
+    const futureDate = moment(dob).isAfter();
+
+    if (validDate && validAge && !futureDate) {
+      // Date of birth is valid
+      // Do something here, e.g. submit form
+      try {
+        const {data} = await axios.post(`${process.env.REACT_APP_API}/signup`, d);
+       
+        console.log(data);
+        if(data.success) {
+            localStorage.setItem("token", data.token);
+            navigate('/home');
+            toast.success(data.msg, {
+                position: 'top-right',
+                autoClose: 15000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: 0,
+                progressStyle: { background: '#E8DFD0' },
+                theme: 'colored',
+                style: { background: 'grey', fontSize: "1.6rem" },
+              });
+            } else {
+                setMailSent(false)
+                toast.error(data.msg, {
                     position: 'top-right',
                     autoClose: 15000,
                     hideProgressBar: false,
@@ -176,24 +226,29 @@ const NewHome = () => {
                     theme: 'colored',
                     style: { background: 'grey', fontSize: "1.6rem" },
                   });
-                } else {
-                    setMailSent(false)
-                    toast.error(data.msg, {
-                        position: 'top-right',
-                        autoClose: 15000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: 0,
-                        progressStyle: { background: '#E8DFD0' },
-                        theme: 'colored',
-                        style: { background: 'grey', fontSize: "1.6rem" },
-                      });
-                }
-        } catch (error) {
-            console.log(error);
-        }
+            }
+    } catch (error) {
+        console.log(error);
+    }
+    } else {
+      // Date of birth is invalid
+      // Show error message to user
+      toast.success('Please select a valid DOB', {
+        position: 'top-right',
+        autoClose: 15000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: 0,
+        progressStyle: { background: '#E8DFD0' },
+        theme: 'colored',
+        style: { background: 'grey', fontSize: "1.6rem" },
+      });
+    //   navigate('/');
+    //   alert('Please select a valid DOB');
+    }
+      
     }
 
     const signinVerifyOTP = async(e) => {
@@ -211,7 +266,7 @@ const NewHome = () => {
               console.log("verification SuccessFully");
               setVerified(false);
               localStorage.setItem("token", data.token);
-              navigate('/dashboard');
+              navigate('/home');
             } else {
                 toast.error(data.msg, {
                     position: 'top-right',
@@ -239,15 +294,16 @@ const NewHome = () => {
     }
     const currentTheme = themes[themeIndex];
     return ( 
-        <>
+        <div className="Home">
             <ToastContainer />
         <div className={`NewHome ${currentTheme.style}`} >
             <div class="home-logo" >
                 <img src={Logo} />
             </div>
             {/* <div className="home-content">Competitive tolls for comprtitive life</div> */}
+            {/* {`home-signup-signin ${currentTheme.style}`} */}
             <div className="home-signup-signin" style={{position: "relative"}}>
-                {!signup && <div className="home-signup" >
+                {!signup && <div className="home-signup" style={{position: "relative"}} >
                 <form onSubmit={(e) => handleSubmit(e)}>
                     <div className="container">
                     <div className="row">
@@ -255,7 +311,7 @@ const NewHome = () => {
                             <label for="fname">First Name</label>
                         </div>
                         <div className="col-55">
-                            <input autocomplete="off" onfocus="this.value='';" type="search" id="fname" name="firstname" placeholder="Your name.." onChange={(e) => setFirstName(e.target.value)}/>
+                            <input autocomplete="off" required={true} onfocus="this.value='';" type="search" id="fname" name="firstname" placeholder="Your name.." onChange={(e) => setFirstName(e.target.value)}/>
                         </div>
                     </div>
                     <div className="row">
@@ -263,7 +319,7 @@ const NewHome = () => {
                             <label for="lname">Last Name</label>
                         </div>
                         <div className="col-55">
-                            <input autoComplete="off"  type="text" id="lname" name="lastname" placeholder="Your last name.." onChange={(e) => setLastName(e.target.value)}/>
+                            <input autoComplete="off" required={true}  type="text" id="lname" name="lastname" placeholder="Your last name.." onChange={(e) => setLastName(e.target.value)}/>
                         </div>
                     </div>  
                     <div className="row">
@@ -271,8 +327,8 @@ const NewHome = () => {
                             <label for="email">Email</label>
                         </div>
                         <div className="col-55" style={{position: 'relative'}}>
-                            <input autoComplete="off" type="email" id="email" name="email" placeholder="Your email.." onChange={(e) => setEmail(e.target.value)} required/>
-                            <i class="fa fa-arrow-circle-o-right" aria-hidden="true" onClick={e => sendOTP(e)} style={{fontSize: "3rem"}}></i>
+                            <input autoComplete="off" type="email" id="email" name="email" placeholder="Your email.." readOnly={read}  onChange={(e) => setEmail(e.target.value)} required/>
+                            <i class="fa fa-arrow-circle-o-right" aria-hidden="true" onClick={e => sendOTP(e,'signup')} style={{fontSize: "3rem"}}></i>
                         </div>
                     </div>
                     <div className="row">
@@ -280,7 +336,7 @@ const NewHome = () => {
                             <label for="email">Email OTP</label>
                         </div>
                         <div className="col-55" style={{position: 'relative'}}>
-                            <input autoComplete="off" type="text" id="email" name="email" placeholder="Enter OTP" onChange={(e) => setOTP(e.target.value)}/>
+                            <input autoComplete="off" type="number" id="email" name="email" placeholder="Enter OTP" onChange={(e) => setOTP(e.target.value)}/>
                            <i class="fa fa-arrow-circle-o-right" aria-hidden="true" onClick={e => signupVerifyOTP(e)} style={{fontSize: "3rem"}}></i>
                         </div>
                     </div>
@@ -307,15 +363,15 @@ const NewHome = () => {
                             <label for="dob">DOB</label>
                         </div>
                         <div className="col-55">
-                            <input autoComplete="off" type="date" id="dob" name="dob" placeholder="Your date of birth.." onChange={(e) => setDOB(e.target.value)}/>
+                            <input autoComplete="off" type="date" id="dob" name="dob" placeholder="Your date of birth.." onChange={(e) => setDOB(e.target.value)}  max={new Date().toISOString().split("T")[0]} />
                         </div>
                     </div>
                     <div className="row button-row">
                         <button>Submit</button>
                     </div>
                     </div>
-                </form>
                 <div className="home-signup-signin-link">Already have an account ? <span onClick={e => changeSignup(e)}>Login</span></div>
+                </form>
                 </div>
                     }
                 {signup && 
@@ -328,7 +384,7 @@ const NewHome = () => {
                                 </div>
                                 <div className="col-55" style={{position: 'relative'}}>
                                     <input autoComplete="off" type="email" id="email" name="email" placeholder="Your email.." onChange={(e) => setEmail(e.target.value)} required/>
-                                    <i class="fa fa-arrow-circle-o-right" aria-hidden="true" onClick={e => sendOTP(e)} style={{fontSize: "3rem"}}></i>
+                                    <i class="fa fa-arrow-circle-o-right" aria-hidden="true" onClick={e => sendOTP(e,'login')} style={{fontSize: "3rem"}}></i>
                                 </div>
                             </div>
                             <div className="row">
@@ -336,7 +392,7 @@ const NewHome = () => {
                                     <label for="email">Email OTP</label>
                                 </div>
                                 <div className="col-55" style={{position: 'relative'}}>
-                                    <input autoComplete="off" type="text" id="email" name="email" placeholder="Enter OTP" onChange={(e) => setOTP(e.target.value)}/>
+                                    <input autoComplete="off" type="number" id="email" name="email" placeholder="Enter OTP" onChange={(e) => setOTP(e.target.value)}/>
                                 <i class="fa fa-arrow-circle-o-right" aria-hidden="true" onClick={e => signinVerifyOTP(e)} style={{fontSize: "3rem"}}></i>
                                 </div>
                             </div>
@@ -354,13 +410,13 @@ const NewHome = () => {
                 </div>}
             </div>
             <div className="footer-links">
-                <div onClick={e => changeVideoPopup(e, true)}>Video Tutorial</div>
+                <div style={{"cursor":"pointer"}} onClick={e => changeVideoPopup(e, true)}>Video Tutorial</div>
                 <Link to="/support">Support</Link>
                 <Link to="/about-us">About Us</Link>
                 <Link to="/terms-of-use">Terms Of Use</Link>
                 <Link to="/privacy-policy">Privacy Policy</Link>
             </div>
-            </>
+            </div>
      );
 }
  

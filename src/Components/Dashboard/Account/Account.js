@@ -2,6 +2,7 @@ import React,{useState,useEffect} from 'react'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
 import '../../StyleSheets/Account.css'
+import Navbar from '../Navbar/Navbar'
 
 const Account = () => {
   const [users, setUsers] = useState("")
@@ -23,13 +24,16 @@ const Account = () => {
     }, [])
     
   return (
-    <div className='account-container'>
-      Account Details
+    <div className='account-container' style={{"paddingTop": "7rem"}}>
+      <Navbar />
+      <div>
+        <div>Account Details</div>
         <p>{users.firstName}</p>
         <p>{users.lastName}</p>
         <p>{users.email}</p>
         <p>{users.dob}</p>
         <Link to={'/updateUser/' + localStorage.getItem('id')}><button className='edit'>Edit</button></Link>
+        </div>
         </div>
   )
   

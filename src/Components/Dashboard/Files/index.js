@@ -1,10 +1,11 @@
 import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link, useParams } from 'react-router-dom';
 import ReactToPrint from 'react-to-print';
 import '../../StyleSheets/tabel.css'
 import '../../StyleSheets/dashboard.css'
 import ResumeComponent from '../Resume/ResumePrint';
+import Navbar from '../Navbar/Navbar';
 
 const Files = () => {
     const token = localStorage.getItem("token");
@@ -14,6 +15,9 @@ const Files = () => {
 
     const [name, setName] = useState("");
 
+    //loading
+    const [allData, setAllData] = useState(false)
+
     const componentRef = useRef(new Array());
 
     const navigate = useNavigate();
@@ -22,9 +26,10 @@ const Files = () => {
         if(!token) {
             navigate('/signin');
         }
-        getResumesDataByUser();
+        // getResumesDataByUser();
         getCardsDataByUser();
-    }, [])
+        setAllData(true)
+    }, [inputId])
 
     const getResumesDataByUser = async() => {
         const headers = {
@@ -48,6 +53,7 @@ const Files = () => {
         try {
             const {data} = await axios.get(`${process.env.REACT_APP_API}/get-all-smartcard-by-user`, {headers})
             console.log(data);
+            setAllData(data)
             if(data.success) {
                 setCardData(data.smartCards);
             }
@@ -107,9 +113,10 @@ const Files = () => {
     }
 
     const updateCard = async(e, id) => {
+        console.log(id);
         e.preventDefault();
         const d = {
-            fileName: name
+            fileName1: name
         }
         const headers = {
             authorization: `Bearer ${token}`
@@ -118,7 +125,7 @@ const Files = () => {
             const {data} = await axios.put(`${process.env.REACT_APP_API}/update-smartcard-name/${id}`, d, {headers});
             console.log({data});
             if(data.success) {
-                setCardData(data.smartCards);
+                // setCardData(...cardData, data.smartCard);
                 setInputId(null);
             }
         } catch (error) {
@@ -140,7 +147,7 @@ const Files = () => {
             const {data} = await axios.delete(`${process.env.REACT_APP_API}/delete-smartcard/${id}`, {headers});
             console.log({data})
             if(data.success) {
-                setCardData(data.smartCards)
+                // setCardData(data.smartCards)
             }
         } catch (error) {
             console.log(error);
@@ -158,12 +165,16 @@ const Files = () => {
  
     return ( 
         <div className="Files" >
+            <Navbar />
             <table>
                 {/* <thead>
                     <tr>
                     <th scope="col">Account</th>
                     </tr>
                 </thead> */}
+                {allData && allData === true ? 
+        <p >Loading ....</p>
+        : <>
                 <tbody>
                     {/* {resumeData.map((data, index) => {
                         const {fileName, _id} = data;
@@ -186,13 +197,14 @@ const Files = () => {
                             </tr>
                         )
                     })} */}
+                    
                     {cardData.length > 0 ? cardData.map((data, index) => {
-                        const {contact, _id} = data;
+                        const {contact, _id,fileName1} = data;
                         return (
                             <tr key={index}>
-                                {inputId != _id && <td data-label="name" className='file-name'><span>{contact.firstName}</span>{" "}<i class="fa fa-pencil" aria-hidden="true" onClick={e => changeInputId(e, _id)}></i></td>}
-                                {inputId == _id && <td data-label="name" className='file-name'><input type="text" defaultValue={contact.firstName} onChange={e => setName(e.target.value)}  />{" "}<i class="fa fa-floppy-o" aria-hidden="true" onClick={e => updateCard(e, _id)}></i></td>}
-                                <td></td>
+                                {inputId != _id && <td data-label="name" className='file-name'><span>{fileName1 === '' ? `unkown ${index}` : fileName1 }</span>{" "}<i class="fa fa-pencil" aria-hidden="true" onClick={e => changeInputId(e, _id)}></i></td>}
+                                {inputId == _id && <td data-label="name" className='file-name'><input type="text" defaultValue={fileName1} onChange={e => setName(e.target.value)}  />{" "}<i class="fa fa-floppy-o" aria-hidden="true" onClick={e => updateCard(e, _id)}></i></td>}
+                                <td><Link to={`/dashboard/web-resume/${_id}`} className="">View Resume</Link></td>
                                 <td data-label="edit" onClick={e => cardEdit(e, _id)}>Edit</td>
                                 {/* <td data-label="download" onClick={e => cardDownload(e, _id)}>Download</td> */}
                                 <td data-label="delete" onClick={e => cardDelete(e, _id)}>Delete</td>
@@ -200,6 +212,7 @@ const Files = () => {
                         )
                     }):<p style={{"border":"none","textAlign":"center"}}>No files found</p>}
                 </tbody>
+                   </> }
             </table>
             {/*<div>
                 <ReactToPrint

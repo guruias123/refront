@@ -36,11 +36,22 @@ const AccountEdit = () => {
     <div className='accountedit-container'>
       {/* onSubmit={(e) => {handleSubmit(e)}} */}
       <form onSubmit={(e) => {handleSubmit(e)}}>
-      <p>{user.firstName}</p>
-        <input  type='text' value={firstName} onChange={(e) => {setFirstName(e.target.value)} } />
+      {/* <p>{user.firstName}</p> */}
+      <p className='edit-detail'>
+       <span> First Name:</span>
+       <input  type='text' value={firstName} onChange={(e) => {setFirstName(e.target.value)} } />
+      </p>
+
+      <p className='edit-detail'>
+        <span>Last Name:</span>
         <input  type='text' value={lastName} onChange={(e) => {setLastName(e.target.value)} } />
+      </p>
         {/* <input value={user.email} readOnly  /> */}
+        
+        <p className='edit-detail'>
+        <span>DOB: </span>
         <input  type='text' value={dob} onChange={(e) => {setDob(e.target.value)} } />
+        </p>
         <button type='submit'>Submit</button>
       </form>
     </div>

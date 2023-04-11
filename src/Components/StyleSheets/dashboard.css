@@ -6,23 +6,142 @@
     gap: 2rem;
     background: var(--primary-background-color);
     height: 100vh;
+    position: relative;
 }
+
+/* popup */
+.popup{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background: #d1cbcb;
+    color: #000;
+    padding: 1rem;
+    gap: 2rem;
+}
+
+.popup-left p{
+    color: #000;
+}
+
+.popup-left p a{
+    color: blue;
+    text-decoration: underline;
+}
+
+.dashboard-container{
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    color: #d1cbcb;
+    border-bottom: 2px solid ;
+    height: 4rem;
+    align-items: center;
+    font-size: 2.4rem;  
+}
+.home-page{
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+}
+.new-home{
+    height: 5rem;
+    position: relative
+;
+}
+
+
+
+.items{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding-top: 4rem;
+}
+
+.items a{
+    color: #d1cbcb;
+    font-size: 2rem;  
+    font-weight: 600;
+
+}
+.left{
+    /* align-self: flex-start; */
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+}
+
+.left p{
+    cursor: pointer;
+}
+.left img{
+    width: 2rem;
+    height: 2rem;
+    cursor: pointer;
+}
+.right{
+    display: flex;
+    gap: 3rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    align-items: center;
+}
+
+
 .Dashboard a{
-    font-size: 2.4rem;
-    color: var(--primary-color);
+    font-size: 2rem;
+    /* color: #d1cbcb; */
+    font-weight: 600;
+}
+.right a{
+    font-size: 1.5rem;
+    font-weight: 600;
 }
 .Dashboard a:hover {
-    color: var(--secondary-color);
+    /* color: var(--secondary-color); */
 }
 
+.logout{
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+}
 
+.create-card{
+    border: 1px solid #d1cbcb;
+    height: 30%;
+    width: 40%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    color: #d1cbcb;
+}
 
+.create-card:hover{
+    background-color: #d1cbcb;
+    color: black !important;
+}
 
 .Resume > *{
     background: var(--primary-background-color) !important;
     height: 100%;
     width: 100%;
-    padding: 2rem 0 0 2rem;
+    padding: 4rem 0 0 2rem;
 }
 
 .ResumeComponent {
@@ -123,8 +242,8 @@ li:first-child {
 
 .Files {
     background: var(--primary-background-color);
-    height: 100%;
-    padding: 2rem;
+    /* height: 100%; */
+    padding: 6rem 2rem 2rem 2rem;
 }
 
 .Files table {
@@ -144,12 +263,34 @@ li:first-child {
   p{
     color: #fff;
     /* --resume-fontsize: 2rem; */
-    font-size: 1.5rem;
+    font-size: 1.5rem !important;
     font-weight: 700;
   }
   .row1{
     padding-bottom: 2rem;
     padding-top: .5rem;
+    cursor: pointer;
+  }
+
+  .row{
+    display: flex;
+    align-items: center;
+  }
+
+  .sections{
+    border-bottom: 0.2rem solid grey !important;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    border-bottom-width: 70%;
+    width: 70%;
+  }
+
+  .remove_button{
+    align-items: flex-end;
+    display: flex;
+    justify-self: flex-end;
+    justify-content: flex-end;
   }
   .section-heading{
     display: flex;
@@ -213,4 +354,25 @@ li:first-child {
         width: 100%;
     }
     }
+
+    @media only screen and (max-width: 1000px) {
+        .sections{
+            width: 100%;
+          }
+        }
+
+    @media only screen and (max-width: 400px) {
+        .home-page{
+            gap: 1rem;
+        }
+        .right{
+            gap: 1rem;
+        }
+        .left{
+            gap: 1rem;
+        }
+        .sections{
+            width: 100%;
+          }
+        }
 

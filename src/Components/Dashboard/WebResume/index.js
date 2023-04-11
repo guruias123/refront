@@ -6,6 +6,7 @@ import Badge from '../../Assets/badge.png'
 // import  Profile from '../../Assets/profile.jpg';
 import '../../StyleSheets/webresume.css';
 import Carousel from '../../Layouts/carousel';
+import Navbar from '../Navbar/Navbar';
 const WebResume = () => {
 
     const {id} = useParams();
@@ -36,7 +37,7 @@ const WebResume = () => {
     const [courses, setCourses] = useState([]);
     const [certifications, setCertifications] = useState([]);
     const [educations, setEducations] = useState([]);
-    const [license, setLicense] = useState({});
+    const [license, setLicense] = useState([]);
     const [references, setReferences] = useState([]);
     const [personnalDetails, setPersonnalDetails] = useState({});
     const [interest, setInterest] = useState([]);
@@ -48,8 +49,6 @@ const WebResume = () => {
         }
         getSmartCard();
         setAllData(true)
-       
-       
     }, [])
 
     const getSmartCard = async() => {
@@ -58,7 +57,7 @@ const WebResume = () => {
             'Content-type': 'application/json; charset=UTF-8'
         }
         try {
-           const {data} = await axios.get(`${process.env.REACT_APP_API}/get-unique-smartcard/${smartCardId}`, {headers})
+           const {data} = await axios.get(`${process.env.REACT_APP_API}/get-unique1-smartcard/${smartCardId}`, {headers})
            console.log({data});
            if(data.success) {
                console.log({smartCard: data.smartCard})
@@ -96,7 +95,7 @@ const WebResume = () => {
                // Certification=
                setCertifications(data.smartCard.certifications);
                // License
-               setLicense(data.smartCard.license);
+               setLicense(data.smartCard.licenses);
                // Course
                setCourses(data.smartCard.courses);
                // Patent
@@ -118,8 +117,9 @@ const WebResume = () => {
 
     return ( 
         <div>
+            {/* <Navbar /> */}
             {allData && allData === true ? 
-        <p>Loading ....</p>
+        <p style={{"paddingTop":"4rem"}}>Loading ....</p>
         :
         <div className="WebResume"> 
             <div className="section section-one">
@@ -131,7 +131,7 @@ const WebResume = () => {
                     <div className='details'>
                         {contact.email != "" && <Link to={`mailto:${contact.email}`} className="email"><i className="fa fa-envelope" aria-hidden="true"></i></Link>}
                         {contact.phone != "" && <Link to={`tel:${contact.phone}`} className="phone"><i className="fa fa-phone" aria-hidden="true"></i></Link>}
-                        {contact.linkedinId != "" && <Link to={contact.linkedinId} className="linkedin"><i className="fa fa-linkedin" aria-hidden="true"></i></Link>}
+                        {contact.linkedinId != "" && <Link to={contact.linkedinId} target="_blank" className="linkedin"><i className="fa fa-linkedin" aria-hidden="true"></i></Link>}
                     </div>
                 </div>
             </div>
@@ -157,7 +157,7 @@ const WebResume = () => {
                                     </div>
                                 </div>
                                 <div className='exp-data common-data'>
-                                    <div className='exp-designation-period common-designation-period'>{exp.designation} {" "} {monthNames[Number(startedDateArr[1]) - 1]} {" "}{startedDateArr[0]} to {monthNames[Number(endedDateArr[1]) - 1]} {" "}{endedDateArr[0]}</div>
+                                    <div className='exp-designation-period common-designation-period'>{exp.designation} {" "} at {exp.companyName} {monthNames[Number(startedDateArr[1]) - 1]} {" "}{startedDateArr[0]} to {monthNames[Number(endedDateArr[1]) - 1]} {" "}{endedDateArr[0]}</div>
                                     <div className='exp-location common-location'>{" "}{exp.city}{" "}{exp.country}</div>
                                 </div>
                             </div>
@@ -181,7 +181,7 @@ const WebResume = () => {
                                     </div>
                                 </div>
                                 <div className='v-exp-data common-data'>
-                                    <div className='v-exp-designation-period common-designation-period'>{vExp.designation} {" "} {monthNames[Number(startedDateArr[1]) - 1]} {" "}{startedDateArr[0]} to {monthNames[Number(endedDateArr[1]) - 1]} {" "}{endedDateArr[0]}</div>
+                                    <div className='v-exp-designation-period common-designation-period'>{vExp.designation} {" "} at {vExp.companyName} {monthNames[Number(startedDateArr[1]) - 1]} {" "}{startedDateArr[0]} to {monthNames[Number(endedDateArr[1]) - 1]} {" "}{endedDateArr[0]}</div>
                                     <div className='v-exp-location common-location'>{" "}{vExp.city}{" "}{vExp.country}</div>
                                 </div>
                             </div>
@@ -205,7 +205,7 @@ const WebResume = () => {
                                     </div>
                                 </div>
                                 <div className='v-exp-data common-data'>
-                                    <div className='v-exp-designation-period common-designation-period'>{wShop.designation} {" "} {monthNames[Number(startedDateArr[1]) - 1]} {" "}{startedDateArr[0]} to {monthNames[Number(endedDateArr[1]) - 1]} {" "}{endedDateArr[0]}</div>
+                                    <div className='v-exp-designation-period common-designation-period'>{wShop.designation} {" "} at {wShop.companyName} {monthNames[Number(startedDateArr[1]) - 1]} {" "}{startedDateArr[0]} to {monthNames[Number(endedDateArr[1]) - 1]} {" "}{endedDateArr[0]}</div>
                                     <div className='v-exp-location common-location'>{" "}{wShop.city}{" "}{wShop.country}</div>
                                 </div>
                             </div>
@@ -229,7 +229,7 @@ const WebResume = () => {
                                     </div>
                                 </div>
                                 <div className='intern-data common-data'>
-                                    <div className='intern-designation-period common-designation-period'>{intern.designation} {" "} {monthNames[Number(startedDateArr[1]) - 1]} {" "}{startedDateArr[0]} to {monthNames[Number(endedDateArr[1]) - 1]} {" "}{endedDateArr[0]}</div>
+                                    <div className='intern-designation-period common-designation-period'>{intern.designation} {" "} at {intern.companyName} {monthNames[Number(startedDateArr[1]) - 1]} {" "}{startedDateArr[0]} to {monthNames[Number(endedDateArr[1]) - 1]} {" "}{endedDateArr[0]}</div>
                                     <div className='intern-location common-location'>{" "}{intern.city}{" "}{intern.country}</div>
                                 </div>
                             </div>
@@ -371,7 +371,7 @@ const WebResume = () => {
                                     </div>
                                 </div>
                                 <div className='training-data common-data'>
-                                    <div className='training-designation-period common-designation-period'>{training.title} {" "} {monthNames[Number(startedDateArr[1]) - 1]} {" "}{startedDateArr[0]} to {monthNames[Number(endedDateArr[1]) - 1]} {" "}{endedDateArr[0]}</div>
+                                    <div className='training-designation-period common-designation-period'>{training.title} {" "} at {training.institutionName} with score of {training.score} {monthNames[Number(startedDateArr[1]) - 1]} {" "}{startedDateArr[0]} to {monthNames[Number(endedDateArr[1]) - 1]} {" "}{endedDateArr[0]}</div>
                                     <div className='training-location common-location'>{" "}{training.city}{" "}{training.country}</div>
                                 </div>
                             </div>
@@ -395,7 +395,7 @@ const WebResume = () => {
                                     </div>
                                 </div>
                                 <div className='course-data common-data'>
-                                    <div className='course-designation-period common-designation-period'>{course.title} {" "} {monthNames[Number(startedDateArr[1]) - 1]} {" "}{startedDateArr[0]} to {monthNames[Number(endedDateArr[1]) - 1]} {" "}{endedDateArr[0]}</div>
+                                    <div className='course-designation-period common-designation-period'>{course.title} {" "} at{course.institutionName} with score of {course.score} {monthNames[Number(startedDateArr[1]) - 1]} {" "}{startedDateArr[0]} to {monthNames[Number(endedDateArr[1]) - 1]} {" "}{endedDateArr[0]}</div>
                                     <div className='course-location common-location'>{" "}{course.city}{" "}{course.country}</div>
                                 </div>
                             </div>
@@ -406,7 +406,7 @@ const WebResume = () => {
             {certifications.length > 0 && <div className='section section-thirteen'>
                 <div className='certifications common'>
                     <h4>Certification</h4>
-                    {certifications?.map((certification, index) => {
+                    {certifications && certifications.map((certification, index) => {
                         let startedDate = certification.startedAt;
                         let startedDateArr = startedDate.split('-');
                         let endedDate = certification.endedAt;
@@ -419,7 +419,7 @@ const WebResume = () => {
                                     </div>
                                 </div>
                                 <div className='certification-data common-data'>
-                                    <div className='certification-designation-period common-designation-period'>{certification.title} {" "} {monthNames[Number(startedDateArr[1]) - 1]} {" "}{startedDateArr[0]} to {monthNames[Number(endedDateArr[1]) - 1]} {" "}{endedDateArr[0]}</div>
+                                    <div className='certification-designation-period common-designation-period'>{certification.title} {" "} at{certification.institutionName} with score of {certification.score} {monthNames[Number(startedDateArr[1]) - 1]} {" "}{startedDateArr[0]} to {monthNames[Number(endedDateArr[1]) - 1]} {" "}{endedDateArr[0]}</div>
                                     <div className='certification-location common-location'>{" "}{certification.city}{" "}{certification.country}</div>
                                 </div>
                             </div>
@@ -427,9 +427,11 @@ const WebResume = () => {
                     })}
                 </div>
             </div>}
-            {license.name != "" && <div className='section section-fourteen'>
-                <div className='license common'>
-                    <h4>License</h4>
+            {license.length > 0 && 
+            <div className='section section-fourteen'>
+            <div className='license common'>
+            <h4>License</h4>
+            {license && license.map(licens => {return <div>
                     <div className='licen common-details'>
                         <div className='licen-circle common-details-circle'>
                             <div>
@@ -437,11 +439,11 @@ const WebResume = () => {
                             </div>
                         </div>
                         <div className='licen-data common-data'>
-                            <div className='licen-designation-period common-designation-period'>{license.name} {" "} {license.number}</div>
+                            <div className='licen-designation-period common-designation-period'>{licens.name} {" "} {licens.number}</div>
                         </div>
                     </div>
                 </div>
-            </div>}
+            })}</div></div>}
             {educations.length > 0 && <div className='section section-fifteen'>
                 <div className='education common'>
                     <h4>Education</h4>
@@ -458,7 +460,7 @@ const WebResume = () => {
                                     </div>
                                 </div>
                                 <div className='edu-data common-data'>
-                                    <div className='edu-designation-period common-designation-period'>{edu.degreeName} {" "} {monthNames[Number(startedDateArr[1]) - 1]} {" "}{startedDateArr[0]} to {monthNames[Number(endedDateArr[1]) - 1]} {" "}{endedDateArr[0]}</div>
+                                    <div className='edu-designation-period common-designation-period'>{edu.degreeName} {" "} at {edu.collegeName} with score of {edu.score} {monthNames[Number(startedDateArr[1]) - 1]} {" "}{startedDateArr[0]} to {monthNames[Number(endedDateArr[1]) - 1]} {" "}{endedDateArr[0]}</div>
                                     <div className='edu-location common-location'>{" "}{edu.city}{" "}{edu.country}</div>
                                 </div>
                             </div>

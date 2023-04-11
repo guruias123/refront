@@ -12,6 +12,7 @@ import ResumePDF from "./Components/Dashboard/Resume/ResumePDF"
 import ResumeCreate from "./Components/Dashboard/Resume/ResumeCreate"
 import ResumeEdit from "./Components/Dashboard/Resume/ResumeEdit"
 import WebResume from "./Components/Dashboard/WebResume"
+import WebResume1 from "./Components/Dashboard/WebResume/Web"
 import SmartCard from "./Components/Dashboard/SmartCard/card"
 import Dashboard from "./Components/Dashboard"
 import SmartCardCreate from "./Components/Dashboard/SmartCard/SmartCardCreate"
@@ -25,6 +26,8 @@ import Account from "./Components/Dashboard/Account/Account"
 import AccountEdit from "./Components/Dashboard/Account/AccountEdit"
 import TermsOfUse from "./Components/Home/TermsOfUse"
 import PrivacyPolicy from "./Components/Home/PrivacyPolicy"
+import Navbar from "./Components/Dashboard/Navbar/Navbar"
+import NewHome from "./Components/Dashboard/Home/Home"
 
 function App() {
   return (
@@ -40,8 +43,11 @@ function App() {
         {/* <Route exact path="/forget-password" element={<ForgetPassword />} />
         <Route exact path="/reset-password/:id" element={<ResetPassword />} /> */}
 
+        {/* Home */}
+        <Route exact path="/home" element={<NewHome />} />
         {/* Dashboard */}
         <Route exact path="/dashboard" element={<Dashboard />} />
+        {/* <Routes> */}
         <Route
           exact
           path="/dashboard/create-resume"
@@ -57,30 +63,31 @@ function App() {
         />
 
         {/* Web Resume */}
-        <Route exact path="/dashboard/web-resume/:id" element={<WebResume />} />
-
+        <Route exact path="/dashboard/web-resume/:id" element={[<Navbar />, <WebResume />]} />
+        <Route exact path="/dashboard/web-resume1/:id" element={[<Navbar />,  <WebResume1 />]} />
         {/* Smart Card */}
         <Route
           exact
           path="/dashboard/create-smart-card"
-          element={<SmartCardCreate />}
+          element={[<Navbar />, <SmartCardCreate />]}
         />
         <Route
           exact
           path="/dashboard/smart-card-home/:id"
-          element={<SmartCardHome />}
+          element={[<Navbar />, <SmartCardHome />]}
         />
         <Route
           exact
           path="/dashboard/edit-smart-card/:id"
-          element={<SmartCardEdit />}
+          element={[<Navbar />, <SmartCardEdit />]}
         />
-        <Route exact path="/dashboard/smart-card/:id" element={<SmartCard />} />
+        <Route exact path="/dashboard/smart-card/:id" element={[<Navbar />, <SmartCard />]} />
 
         {/* Files */}
         <Route exact path="/dashboard/files" element={<Files />} />
 
         <Route exact path="/payment" element={<Payment />} />
+        
       </Routes>
     </div>
   )

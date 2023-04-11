@@ -182,7 +182,7 @@
 
 
 .NewHome {
-    height: 100vh;
+    /* height: 100vh; */
 
     /* width: 100vw; */
     /* height: 100% ; */
@@ -218,9 +218,11 @@
 
 .home-signup-signin {
     width: 100%;
+    /* height: 100vh; */
 }
 .home-signup {
     width: 100%;
+    padding-bottom: 3rem;
 }
 .home-signup form {
     width: 100%;
@@ -242,12 +244,12 @@
     .row .col-55 {
         width: 75%;
     }
-    .footer-links {
+    /* .footer-links {
         flex-direction: column;
         position: relative !important;
         margin-top: 10rem;
         gap: 2rem !important;
-    }
+    } */
 }
 .row .col-55 i {
     color: grey;
@@ -270,6 +272,8 @@
     flex-direction: column;
 }
 
+
+
 .footer-links {
     display: flex;
     font-size: 1.4rem;
@@ -279,9 +283,19 @@
     position: absolute;
     bottom: 0;
     left: 50%;
-    transform: translate(-50%, -20%);
+    transform: translate(-50%, -20%); 
+   
+    /* position: relative;
+    margin-bottom: 0;
+    margin-left: 50%;
+    transform: translate(-50%, 100%); */
 }
-
+.Login_style .footer-links{
+    position: absolute !important;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, -20%); 
+}
 .home-logo img {
     width: 3rem;
     height: 3rem;
@@ -297,4 +311,28 @@
     /* top: -34px; */
     padding-top: 2rem;
 }
+@media only screen and (max-width: 960px) {
+    .row .col-25 {
+        width: 45%;
+        text-align: left;
+    }
+}
+@media only screen and (max-width: 700px) {
+    .Home {
+        text-align: center;
+        background: var(--primary-background-color);
+        position: relative;
+        /* height: 100vh; */
+    }
+    /* .footer-links{
+        display: flex;
+        flex-direction: column;
+    } */
+    }
+    @media only screen and (max-width: 400px) {
+        .footer-links{
+            display: flex;
+            flex-direction: row;
+            font-size: 1rem;        }
+        }
 
